@@ -1,0 +1,318 @@
+==============================================
+Day 1/180 – 40 LPA Developer Challenge | 
+8 Years Experience Deep Study Plan
+==============================================
+HTML
+CSS
+JS
+ReactJS
+NextJS
+NodeJS
+ExpressJS
+MongoDB
+Redis
+Docker
+GitHub Action
+Cloud AWS\Azure
+CSS Framework : Tailwind/Bootstrap
+NPM /YARN
+GraphQL
+DSA
+Syatem Design
+Cypress
+Performace Optimize/Scalig
+Dev Tools
+AI Knowledge
+
+==============================================
+Day 2/180 – Redis & Caching Explained | 
+40 LPA Developer Challenge
+==============================================
+what is Caching?
+caching means storing frequently accessed data in fast storage so that we operations like:
+Database Queries
+API calls
+Heavy Computation
+
+Instead of :
+user => server => database => response
+With caching:
+user => server => cache(redis) => response
+
+why caching is important:
+faste response time
+reduce database load
+improve scalability
+reduce infrastructure costs
+
+without cache:
+db query time =120ms
+with redis cache:
+redis lookup=2ms
+
+what is Redis?
+Redis => remote dictionally server
+it is an in-memory key value database used for:
+caching
+session store
+pub/sub messaging
+rate limiting
+job queues
+
+==============================================
+40 LPA Developer Journey | 
+Day 3/180 | Developer Preparation
+==============================================
+1.Create project
+2.Install package
+3.Project structure
+4.Install redis on your system
+
+brew install redis
+brew services start redis
+
+create server.js
+set or get 
+store dynamic data
+
+
+npm init --y
+npm install express redis
+npm install nodemon --save -D
+
+//Commands
+brew install redis
+brew services start redis
+
+
+server.js
+const express=require("express");
+const redis=require("redis");
+
+const app=express()
+
+//connect redis
+async function connectRedis(){
+await client.connect();
+console.log("Redis Connected")
+}
+connectRedis()
+
+//set value
+app.get("/set")
+app.get("/",(req,res)=>{
+res.send("Server is running")
+})
+
+app.post("set-user",async(req,res)=>{
+
+const {id,name}=req.body;
+await client.set(`id${id}`)
+res.send({
+message:"User set successfully"
+})
+})
+
+app.get("get-user/:id",async(req,res)=>{
+const {id}=req.params;
+const user=await client.get(`user${id}`)
+res.send({
+user,
+})
+})
+
+app.listen(3000,()=>{
+console.log("server is started")
+}
+
+
+
+npm run dev
+
+
+
+https://www.youtube.com/watch?v=DLKzd3bvgt8
+//Installation
+https://github.com/tporadowski/redis/releases
+
+redis-cli.exe => open it
+
+>set name suraj
+>get name
+
+open cmd =>
+>redis-server
+>redis-cli
+>set name suraj
+>set channel playredis
+>get name
+
+=========================================================
+1. Create Project
+mkdir node-redis-crud
+cd node-redis-crud
+npm init -y
+
+2. Install Packages
+npm install express redis
+npm install nodemon --save-dev
+
+
+Add script in package.json
+"scripts": {
+  "dev": "nodemon server.js"
+}
+
+3. Project Structure
+node-redis-crud/
+│
+├── node_modules/
+├── package.json
+├── server.js
+
+4. Install Redis (Mac)
+brew install redis
+brew services start redis
+
+Check Redis is running
+redis-cli ping
+
+👉 Output should be: PONG
+
+
+const express = require("express");
+const { createClient } = require("redis");
+
+const app = express();
+app.use(express.json()); // Middleware for JSON
+
+// Create Redis client
+const client = createClient();
+
+client.on("error", (err) => console.log("Redis Error:", err));
+
+// Connect Redis
+async function connectRedis() {
+  await client.connect();
+  console.log("✅ Redis Connected");
+}
+connectRedis();
+
+// Home Route
+app.get("/", (req, res) => {
+  res.send("🚀 Server is running");
+});
+
+
+// ✅ CREATE (SET USER)
+app.post("/set-user", async (req, res) => {
+  const { id, name } = req.body;
+
+  await client.set(`user:${id}`, JSON.stringify({ id, name }));
+
+  res.send({
+    message: "✅ User stored in Redis",
+  });
+});
+
+
+// ✅ READ (GET USER)
+app.get("/get-user/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const user = await client.get(`user:${id}`);
+
+  res.send({
+    data: JSON.parse(user),
+  });
+});
+
+
+// ✅ UPDATE USER
+app.put("/update-user/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  await client.set(`user:${id}`, JSON.stringify({ id, name }));
+
+  res.send({
+    message: "✏️ User updated",
+  });
+});
+
+
+// ✅ DELETE USER
+app.delete("/delete-user/:id", async (req, res) => {
+  const { id } = req.params;
+
+  await client.del(`user:${id}`);
+
+  res.send({
+    message: "🗑️ User deleted",
+  });
+});
+
+
+// Start Server
+app.listen(3000, () => {
+  console.log("🔥 Server started on port 3000");
+});
+
+6. Test APIs (Postman / Thunder Client)
+🔹 Create User
+POST http://localhost:3000/set-user
+Body:
+{
+  "id": 1,
+  "name": "Suraj"
+}
+
+Get User
+GET http://localhost:3000/get-user/1
+
+Update User
+PUT http://localhost:3000/update-user/1
+Body:
+{
+  "name": "Suraj Pawar"
+}
+🔹 Delete User
+DELETE http://localhost:3000/delete-user/1
+
+Important Concepts (Interview Focus 🔥)
+Redis is in-memory database (very fast)
+Used for:
+Caching ⚡
+Session storage 🔐
+Rate limiting 🚦
+
+Key format best practice:
+user:1
+user:2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
