@@ -290,29 +290,71 @@ Key format best practice:
 user:1
 user:2
 
+=========================================================
+Day-04 40 LPA Developer Journey | 
+Day 4/180 | Developer Preparation
+=========================================================
+Advanced:
+GraphQL
+Rte Limiting Authentication
+Authorization
 
 
+=========================================================
+Day-05 40 LPA Developer Journey | 
+Day 5/180 | Developer Preparation
+=========================================================
+Topics:
+Docker
+Containerzation
+Multi-Stage Builds
+
+create a new folder => D5
+npm init -y
+npm install express
 
 
+server.js
+const express=require("express")
+const app=express();
+
+app.get("/",(req,res)=>{
+res.send("Hello from Dockerized Express app...!!!")
+})
+
+const PORT=process.env.PORT|| 5500;
+
+app.listen(PORT,()=>{
+console.log(`Server running on port ${PORT}`)
+});
 
 
+Dockerfile:
+FROM node:20-apline
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 5000
+CMD ["npm","start"]
 
 
+.dockerignore
+node_modules
 
+Build image
+docker build -t d5 .
 
+Run container
+docker run -p 5500:5500 d5
 
+👉 Open browser:
+http://localhost:5500
 
+Check container is running
+docker ps
 
-
-
-
-
-
-
-
-
-
-
+docker logs b301d89ea0e7
 
 
 
